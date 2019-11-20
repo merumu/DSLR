@@ -46,17 +46,34 @@ def maxi(data):
     return tmp
 
 def firstQuartile(data):
-    #tmp = data.sort_values()
-    #n = len(tmp)
-    #print((n + 3) // 4)
-    #print(tmp[(n + 3) // 4])
-    return 0
+    tmp = data.sort_values()
+    n = len(tmp)
+    q1 = (n + 3) // 4
+    index = 1
+    for value in tmp:
+        if index == q1:
+            return value
+        index += 1
 
-def median():
-    pass
+def median(data):
+    tmp = data.sort_values()
+    n = len(tmp)
+    q2 = (n + 1) // 2
+    index = 1
+    for value in tmp:
+        if index == q2:
+            return value
+        index += 1
 
-def thirdQuartile():
-    pass
+def thirdQuartile(data):
+    tmp = data.sort_values()
+    n = len(tmp)
+    q3 = (3 * n + 1) // 4
+    index = 1
+    for value in tmp:
+        if index == q3:
+            return value
+        index += 1
 
 def describe(data):
     feature = pandas.DataFrame(index=['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max'])
@@ -65,7 +82,7 @@ def describe(data):
         if all(isinstance(x, float) for x in data[row]):
             tmp = data[row].dropna()
             if len(tmp) > 0:
-                feature['Feature ' + str(n)] = [count(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), 6, 7, maxi(tmp)]
+                feature['Feature ' + str(n)] = [count(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
                 n += 1
     print(feature)
 
