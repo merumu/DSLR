@@ -1,6 +1,5 @@
 import sys
 import pandas
-import numpy
 
 class FileLoader:
     def __init__(self):
@@ -12,14 +11,10 @@ class FileLoader:
         print("Loading dataset of dimensions {} x {}".format(len(df.axes[0]), len(df.axes[1])))
         return df
 
-def count(data):
+def mean(data):
     total = 0
     for value in data:
         total += value
-    return total
-
-def mean(data):
-    total = count(data)
     return total / len(data)
 
 def std(data):
@@ -82,7 +77,8 @@ def describe(data):
         if all(isinstance(x, float) for x in data[row]):
             tmp = data[row].dropna()
             if len(tmp) > 0:
-                feature['Feature ' + str(n)] = [count(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
+                feature['Feature ' + str(n)] = [len(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
+                #feature['With pandas' + str(n)] = [tmp.count(), tmp.mean(), tmp.std(), min(tmp), tmp.quantile(.25), tmp.quantile(.5), tmp.quantile(.75), max(tmp)]
                 n += 1
     print(feature)
 
