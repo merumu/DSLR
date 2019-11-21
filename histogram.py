@@ -8,7 +8,7 @@ def getHouse(data, row, house):
     return house[row].dropna()
 
 def histogram(data):
-    fig, axs = plt.subplots(3, 5, figsize=(22, 12))
+    fig, axs = plt.subplots(3, 5, figsize=(24, 12))
     i = 0
     j = 0
     for row in data:
