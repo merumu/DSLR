@@ -4,6 +4,10 @@ from FileLoader import FileLoader
 import matplotlib.pyplot as plt
 from describe import *
 
+def getHouse(data, house):
+    house = data[data["Hogwarts House"]==house]
+    return house
+
 def compare(tmp1, tmp2):
     a = mean(tmp1)
     b = mean(tmp2)
@@ -43,13 +47,24 @@ def scatterPlot(data):
                                 best = score
                                 feat1 = row1
                                 feat2 = row2
-    df = data[[feat1,feat2]].dropna()
-    df1 = df[feat1]
-    df2 = df[feat2]
+    df = data[['Hogwarts House',feat1,feat2]].dropna()
+    #df1 = df[feat1]
+    #df2 = df[feat2]
+    Gryffindor = getHouse(data, 'Gryffindor')
+    Slytherin = getHouse(data, 'Slytherin')
+    Ravenclaw = getHouse(data, 'Ravenclaw')
+    Hufflepuff = getHouse(data, 'Hufflepuff')
     plt.title(str(feat1) + " / " +str(feat2))
-    plt.scatter(df1.index, df1, alpha=0.5, label=str(feat1))
-    plt.scatter(df2.index, df2, alpha=0.5, label=str(feat2))
+    #plt.scatter(df1.index, df1, alpha=0.5, label=str(feat1))
+    #plt.scatter(df2.index, df2, alpha=0.5, label=str(feat2))
+    plt.scatter(Gryffindor[feat1], Gryffindor[feat2], alpha=0.5, label='Gryffindor', color='r')
+    plt.scatter(Slytherin[feat1], Slytherin[feat2], alpha=0.5, label='Slytherin', color='g')
+    plt.scatter(Ravenclaw[feat1], Ravenclaw[feat2], alpha=0.5, label='Ravenclaw', color='b')
+    plt.scatter(Hufflepuff[feat1], Hufflepuff[feat2], alpha=0.5, label='Hufflepuff', color='purple')
+    plt.xlabel(str(feat1))
+    plt.ylabel(str(feat2))
     plt.legend(prop={'size': 6})
+    print(str(feat1) + " and " + str(feat2) + " are the most similar features")
     plt.show()
 
 if __name__ == "__main__":

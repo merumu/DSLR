@@ -2,6 +2,7 @@ import sys
 import numpy as np
 from FileLoader import FileLoader
 import matplotlib.pyplot as plt
+from describe import std
 
 def getHouse(data, row, house):
     house = data[data["Hogwarts House"]==house]
@@ -11,8 +12,13 @@ def histogram(data):
     fig, axs = plt.subplots(3, 5, figsize=(24, 12))
     i = 0
     j = 0
+    bestStd = None
     for row in data:
         if all(isinstance(x, float) for x in data[row]):
+            stdScore = std(data[row].dropna())
+            if bestStd == None or bestStd > stdScore:
+                bestStd = stdScore
+                bestRow = row
             Gryffindor = getHouse(data, row, 'Gryffindor')
             Slytherin = getHouse(data, row, 'Slytherin')
             Ravenclaw = getHouse(data, row, 'Ravenclaw')
@@ -31,6 +37,7 @@ def histogram(data):
     if i < 3 and j < 4:
         plt.delaxes(axs[2][3])
         plt.delaxes(axs[2][4])
+    print(str(bestRow) + " has the most homogeneous distribution of scores between the four houses")
     plt.show()
 
 if __name__ == "__main__":
