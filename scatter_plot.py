@@ -60,7 +60,7 @@ def scatterPlot(data):
     plt.scatter(Gryffindor[feat1], Gryffindor[feat2], alpha=0.5, label='Gryffindor', color='r')
     plt.scatter(Slytherin[feat1], Slytherin[feat2], alpha=0.5, label='Slytherin', color='g')
     plt.scatter(Ravenclaw[feat1], Ravenclaw[feat2], alpha=0.5, label='Ravenclaw', color='b')
-    plt.scatter(Hufflepuff[feat1], Hufflepuff[feat2], alpha=0.5, label='Hufflepuff', color='purple')
+    plt.scatter(Hufflepuff[feat1], Hufflepuff[feat2], alpha=0.5, label='Hufflepuff', color='yellow')
     plt.xlabel(str(feat1))
     plt.ylabel(str(feat2))
     plt.legend(prop={'size': 6})
