@@ -1,5 +1,6 @@
 import sys
 import pandas
+import numpy
 from FileLoader import FileLoader
 
 def mean(data):
@@ -15,7 +16,7 @@ def std(data):
     for value in data:
         summ += (value - moy) ** 2
         n += 1
-    return (summ / n) ** 1/2
+    return numpy.sqrt(summ / n)
 
 def mini(data):
     tmp = data[0]

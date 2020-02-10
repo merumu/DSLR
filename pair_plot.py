@@ -22,4 +22,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         pairPlot(data)
     else:
-        print("Usage : python histogram.py path_file")
+        print("Usage : python pair_plot.py path_file")

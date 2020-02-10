@@ -73,4 +73,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         scatterPlot(data)
     else:
-        print("Usage : python histogram.py path_file")
+        print("Usage : python scatter_plot.py path_file")
