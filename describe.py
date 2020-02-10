@@ -16,7 +16,7 @@ def std(data):
     for value in data:
         summ += (value - moy) ** 2
         n += 1
-    return numpy.sqrt(summ / n)
+    return numpy.sqrt(summ / (n - 1))
 
 def mini(data):
     tmp = data[0]
@@ -70,7 +70,7 @@ def describe(data):
             tmp = data[row].dropna()
             if len(tmp) > 0:
                 feature['Feature ' + str(n)] = [len(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
-                #feature['With pandas' + str(n)] = [tmp.count(), tmp.mean(), tmp.std(), min(tmp), tmp.quantile(.25), tmp.quantile(.5), tmp.quantile(.75), max(tmp)]
+                #feature['pandas ' + str(n)] = [tmp.count(), tmp.mean(), tmp.std(), min(tmp), tmp.quantile(.25), tmp.quantile(.5), tmp.quantile(.75), max(tmp)]
                 n += 1
     print(feature)
 
