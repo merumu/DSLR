@@ -32,18 +32,22 @@ def training(data):
     #np.set_printoptions(threshold=sys.maxsize)
     #print(y_train)
     gryffindor.fit(x_train, y_train)
+    print(gryffindor.thetas)
 
     ravenclaw = LogisticRegression(alpha=0.00001, max_iter=150, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Ravenclaw', 1, 0)
     ravenclaw.fit(x_train, y_train)
+    print(ravenclaw.thetas)
 
     slytherin = LogisticRegression(alpha=0.00001, max_iter=150, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Slytherin', 1, 0)
     slytherin.fit(x_train, y_train)
+    print(slytherin.thetas)
 
     hufflepuff = LogisticRegression(alpha=0.00001, max_iter=150, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Hufflepuff', 1, 0)
     hufflepuff.fit(x_train, y_train)
+    print(hufflepuff.thetas)
     #test
     test = np.array([-255.47823,167.38])
     test = test.reshape((1,2))

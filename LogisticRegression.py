@@ -30,7 +30,6 @@ class LogisticRegression:
             y_pred = self.predict(x_train)
             grad = self._vec_log_gradient_(x_new, y_true, y_pred)
             self.thetas = self.thetas - self.alpha * (1/x_train.shape[0]) * grad
-        print(self.thetas)
     
     def predict(self, x_train):
         """
