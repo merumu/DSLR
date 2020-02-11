@@ -2,7 +2,7 @@ import numpy as np
 import sys
 from FileLoader import FileLoader
 
-def accuracy_score_(y_true, y_pred):
+def accuracy_score_(y_true, y_pred, normalize=True):
     """
     Compute the accuracy score.
     Args:
@@ -18,6 +18,8 @@ def accuracy_score_(y_true, y_pred):
     for pred, true in zip(y_pred, y_true):
         if pred == true:
             n += 1
+    if normalize == False:
+        return n
     return n / y_pred.shape[0]
 
 if __name__ == "__main__":
