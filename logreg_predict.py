@@ -24,20 +24,19 @@ def getTheta(size):
 def delete_nan(size, stud, thetaG, thetaR, thetaS, thetaH):
     delete = 0
     for n in range(size):
-        if n + delete < size and np.isnan(stud[n]):#delete nan in stud and corresponding thetas
-            stud = np.delete(stud, n)
-            thetaG = np.delete(thetaG, n + 1)
-            thetaR = np.delete(thetaR, n + 1)
-            thetaS = np.delete(thetaS, n + 1)
-            thetaH = np.delete(thetaH, n + 1)
-            n -= 1
+        if np.isnan(stud[n - delete]):#delete nan in stud and corresponding thetas
+            stud = np.delete(stud, n - delete)
+            thetaG = np.delete(thetaG, n + 1 - delete)
+            thetaR = np.delete(thetaR, n + 1 - delete)
+            thetaS = np.delete(thetaS, n + 1 - delete)
+            thetaH = np.delete(thetaH, n + 1 - delete)
             delete += 1
     stud = stud.reshape((1, size - delete))
     return (stud, thetaG, thetaR, thetaS, thetaH)
 
 def predict(data):
-    x_data = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']]
-    #x_test = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    #x_data = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']]
+    x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
     x_test = x_norm.to_numpy()
     with open('houses.csv', 'w', newline='') as csvfile:
