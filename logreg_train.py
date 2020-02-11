@@ -3,6 +3,7 @@ import pickle
 from FileLoader import FileLoader
 from LogisticRegression import LogisticRegression
 import numpy as np
+import pandas as pd
 
 def setTheta(thetaG, thetaR, thetaS, thetaH):
     with open('cache', 'wb') as fichier:
@@ -13,29 +14,37 @@ def setTheta(thetaG, thetaR, thetaS, thetaH):
         my_pickler.dump(thetaH)
         fichier.close()
 
+def normalize(df):
+    df_norm = pd.DataFrame()
+    for col in df:
+        df_norm[col] = (df[col] - df[col].min()) / (df[col].max() - df[col].min())
+    return df_norm
+
 def training(data):
     data = data.dropna()#for later : should drop only NaN line in selected columns
-    x_train = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']].to_numpy()
-    #x_train = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']].to_numpy()
+    x_data = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']]
+    #x_train = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    x_norm = normalize(x_data)
+    x_train = x_norm.to_numpy()
     y = np.array(data['Hogwarts House'])
-    gryffindor = LogisticRegression(alpha=0.0001, max_iter=100, verbose=True, learning_rate='constant')
+    gryffindor = LogisticRegression(alpha=0.1, max_iter=100, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Gryffindor', 1, 0)
     #np.set_printoptions(threshold=sys.maxsize)
     #print(y_train)
     gryffindor.fit(x_train, y_train)
     print(gryffindor.thetas)
 
-    ravenclaw = LogisticRegression(alpha=0.0001, max_iter=100, verbose=True, learning_rate='constant')
+    ravenclaw = LogisticRegression(alpha=0.1, max_iter=100, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Ravenclaw', 1, 0)
     ravenclaw.fit(x_train, y_train)
     print(ravenclaw.thetas)
 
-    slytherin = LogisticRegression(alpha=0.0001, max_iter=100, verbose=True, learning_rate='constant')
+    slytherin = LogisticRegression(alpha=0.1, max_iter=100, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Slytherin', 1, 0)
     slytherin.fit(x_train, y_train)
     print(slytherin.thetas)
 
-    hufflepuff = LogisticRegression(alpha=0.0001, max_iter=100, verbose=True, learning_rate='constant')
+    hufflepuff = LogisticRegression(alpha=0.1, max_iter=100, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Hufflepuff', 1, 0)
     hufflepuff.fit(x_train, y_train)
     print(hufflepuff.thetas)

@@ -2,7 +2,7 @@ import sys
 import pickle
 from FileLoader import FileLoader
 import numpy as np
-from logreg_train import setTheta
+from logreg_train import setTheta, normalize
 import csv
 
 def getTheta(size):
@@ -36,13 +36,15 @@ def delete_nan(size, stud, thetaG, thetaR, thetaS, thetaH):
     return (stud, thetaG, thetaR, thetaS, thetaH)
 
 def predict(data):
-    x_test = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']].to_numpy()
-    #x_test = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']].to_numpy()
+    x_data = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']]
+    #x_test = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    x_norm = normalize(x_data)
+    x_test = x_norm.to_numpy()
     with open('houses.csv', 'w', newline='') as csvfile:
         fieldnames = ['Index', 'Hogwarts House']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
-        n = 0
+        index = 0
         for stud in x_test:
             (thetaG, thetaR, thetaS, thetaH) = getTheta(stud.shape[0] + 1)
             (stud, thetaG, thetaR, thetaS, thetaH) = delete_nan(x_test.shape[1], stud, thetaG, thetaR, thetaS, thetaH)
@@ -51,20 +53,20 @@ def predict(data):
             r_score = stud.dot(thetaR)
             s_score = stud.dot(thetaS)
             h_score = stud.dot(thetaH)
-            print("score :")
-            print(g_score)
-            print(r_score)
-            print(s_score)
-            print(h_score)
+            #print("score :")
+            #print(g_score)
+            #print(r_score)
+            #print(s_score)
+            #print(h_score)
             if max([g_score, r_score, s_score, h_score]) == g_score:
-                writer.writerow({'Index': n, 'Hogwarts House': 'Gryffindor'})
+                writer.writerow({'Index': index, 'Hogwarts House': 'Gryffindor'})
             elif max([g_score, r_score, s_score, h_score]) == r_score:
-                writer.writerow({'Index': n, 'Hogwarts House': 'Ravenclaw'})
+                writer.writerow({'Index': index, 'Hogwarts House': 'Ravenclaw'})
             elif max([g_score, r_score, s_score, h_score]) == s_score:
-                writer.writerow({'Index': n, 'Hogwarts House': 'Slytherin'})
+                writer.writerow({'Index': index, 'Hogwarts House': 'Slytherin'})
             elif max([g_score, r_score, s_score, h_score]) == h_score:
-                writer.writerow({'Index': n, 'Hogwarts House': 'Hufflepuff'})
-            n += 1
+                writer.writerow({'Index': index, 'Hogwarts House': 'Hufflepuff'})
+            index += 1
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
