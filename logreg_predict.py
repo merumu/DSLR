@@ -21,18 +21,12 @@ def getTheta(size):
         thetaH = np.zeros(size)
     return (thetaG, thetaR, thetaS, thetaH)
 
-def delete_nan(size, stud, thetaG, thetaR, thetaS, thetaH):
-    delete = 0
+def delete_nan(size, stud):
     for n in range(size):
-        if np.isnan(stud[n - delete]):#delete nan in stud and corresponding thetas
-            stud = np.delete(stud, n - delete)
-            thetaG = np.delete(thetaG, n + 1 - delete)
-            thetaR = np.delete(thetaR, n + 1 - delete)
-            thetaS = np.delete(thetaS, n + 1 - delete)
-            thetaH = np.delete(thetaH, n + 1 - delete)
-            delete += 1
-    stud = stud.reshape((1, size - delete))
-    return (stud, thetaG, thetaR, thetaS, thetaH)
+        if np.isnan(stud[n]):
+            stud[n] = 0
+    stud = stud.reshape((1, size))
+    return stud
 
 def predict(data):
     #x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Care of Magical Creatures','Charms']]
@@ -46,7 +40,7 @@ def predict(data):
         index = 0
         for stud in x_test:
             (thetaG, thetaR, thetaS, thetaH) = getTheta(stud.shape[0] + 1)
-            (stud, thetaG, thetaR, thetaS, thetaH) = delete_nan(x_test.shape[1], stud, thetaG, thetaR, thetaS, thetaH)
+            stud = delete_nan(x_test.shape[1], stud)
             stud = np.insert(stud, 0, 1, axis=1)
             g_score = stud.dot(thetaG)
             r_score = stud.dot(thetaR)
