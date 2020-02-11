@@ -35,8 +35,8 @@ def delete_nan(size, stud, thetaG, thetaR, thetaS, thetaH):
     return (stud, thetaG, thetaR, thetaS, thetaH)
 
 def predict(data):
-    #x_data = data[['Astronomy', 'Herbology', 'Defense Against the Dark Arts', 'Ancient Runes', 'Charms']]
-    x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Care of Magical Creatures','Charms']]
+    #x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
     x_test = x_norm.to_numpy()
     with open('houses.csv', 'w', newline='') as csvfile:
