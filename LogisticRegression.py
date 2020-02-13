@@ -31,8 +31,8 @@ class LogisticRegression:
             y_pred = self.predict(x_train)
             grad = self._vec_log_gradient_(x_new, y_true, y_pred)
             self.thetas = self.thetas - self.alpha * (1/x_train.shape[0]) * grad
-            if (n % 100) == 0:
-                print(n, "/",self.max_iter, " :\tloss ", self._vec_log_loss_(y_true, y_pred, x_train.shape[0]), sep="")
+            if (n % (self.max_iter/10)) == 0:
+                print("epoch\t", n, "/",self.max_iter, " :\tloss: ", self._vec_log_loss_(y_true, y_pred, x_train.shape[0]), sep="")
         print("")
     
     def predict(self, x_train):
