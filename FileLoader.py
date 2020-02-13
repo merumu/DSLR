@@ -5,7 +5,11 @@ class FileLoader:
         pass
 
     def load(self, path):
-        csv_file = pandas.read_csv(path)
-        df = pandas.DataFrame(csv_file)
-        print("Loading dataset of dimensions {} x {}".format(len(df.axes[0]), len(df.axes[1])))
-        return df
+        try:
+            csv_file = pandas.read_csv(path)
+            df = pandas.DataFrame(csv_file)
+            print("Loading dataset of dimensions {} x {}".format(len(df.axes[0]), len(df.axes[1])))
+            return df
+        except:
+            print("error: incorrect path or incorrect csv file")
+            exit()
