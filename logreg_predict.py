@@ -46,11 +46,6 @@ def predict(data):
             r_score = stud.dot(thetaR)
             s_score = stud.dot(thetaS)
             h_score = stud.dot(thetaH)
-            #print("score :")
-            #print(g_score)
-            #print(r_score)
-            #print(s_score)
-            #print(h_score)
             if max([g_score, r_score, s_score, h_score]) == g_score:
                 writer.writerow({'Index': index, 'Hogwarts House': 'Gryffindor'})
             elif max([g_score, r_score, s_score, h_score]) == r_score:

@@ -3,13 +3,13 @@ import numpy as np
 
 class LogisticRegression:
     
-    def __init__(self, alpha=0.001, max_iter=1000, verbose=False, learning_rate='constant'):
+    def __init__(self, name, alpha=0.001, max_iter=1000, verbose=False, learning_rate='constant'):
+        self.name = name
         self.alpha = alpha
         self.max_iter = max_iter
         self.verbose = verbose
-        self.learning_rate = learning_rate # can be 'constant' or 'invscaling'
+        self.learning_rate = learning_rate
         self.thetas = []
-        # Your code here (e.g. a list of loss for each epochs...)
     
     def fit(self, x_train, y_train):
         """
@@ -26,10 +26,14 @@ class LogisticRegression:
         self.thetas = np.zeros(x_train.shape[1] + 1)
         x_new = np.insert(x_train, 0, 1, axis=1)
         y_true = np.array(y_train)
-        for n in range(self.max_iter):
+        print("Training for class : ", self.name)
+        for n in range(self.max_iter + 1):
             y_pred = self.predict(x_train)
             grad = self._vec_log_gradient_(x_new, y_true, y_pred)
             self.thetas = self.thetas - self.alpha * (1/x_train.shape[0]) * grad
+            if (n % 100) == 0:
+                print(n, "/",self.max_iter, " :\tloss ", self._vec_log_loss_(y_true, y_pred, x_train.shape[0]), sep="")
+        print("")
     
     def predict(self, x_train):
         """
@@ -80,5 +84,5 @@ class LogisticRegression:
 
     def _vec_log_loss_(self, y_true, y_pred, m, eps=1e-15):
         if isinstance(y_pred, np.ndarray) and isinstance(y_true, np.ndarray):
-            return (-1/m) * (y_true.dot(np.log(y_pred)) + (1 - y_true).dot(np.log(1 - y_pred)))
+            return (-1/m) * (y_true.dot(np.log(self._sigmoid(y_pred))) + (1 - y_true).dot(np.log(1 - self._sigmoid(y_pred))))
         return (-1/m) * (y_true * log(y_pred) + (1 - y_true) * log(1 - y_pred))
