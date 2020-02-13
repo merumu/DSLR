@@ -22,15 +22,24 @@ def getTheta(size):
     return (thetaG, thetaR, thetaS, thetaH)
 
 def delete_nan(size, stud):
+    total = 0
+    nb = 0
+    for x in stud:
+        if np.isnan(x):
+            pass
+        else:
+            total += x
+            nb += 1
+    mean = total/nb
     for n in range(size):
         if np.isnan(stud[n]):
-            stud[n] = 0
+            stud[n] = mean
     stud = stud.reshape((1, size))
     return stud
 
 def predict(data):
-    #x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Care of Magical Creatures','Charms']]
-    x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying']]
+    #x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
     x_test = x_norm.to_numpy()
     with open('houses.csv', 'w', newline='') as csvfile:

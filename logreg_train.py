@@ -22,32 +22,26 @@ def normalize(df):
 
 def training(data):
     data = data.dropna()#for later : should drop only NaN line in selected columns
-    #x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Care of Magical Creatures','Charms']]
-    x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
+    x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying']]
+    #x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
     x_train = x_norm.to_numpy()
     y = np.array(data['Hogwarts House'])
     gryffindor = LogisticRegression("Gryffindor", alpha=0.1, max_iter=1000, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Gryffindor', 1, 0)
-    #np.set_printoptions(threshold=sys.maxsize)
-    #print(y_train)
     gryffindor.fit(x_train, y_train)
-    #print(gryffindor.thetas)
 
     ravenclaw = LogisticRegression("Ravenclaw", alpha=0.1, max_iter=1000, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Ravenclaw', 1, 0)
     ravenclaw.fit(x_train, y_train)
-    #print(ravenclaw.thetas)
 
     slytherin = LogisticRegression("Slytherin", alpha=0.1, max_iter=1000, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Slytherin', 1, 0)
     slytherin.fit(x_train, y_train)
-    #print(slytherin.thetas)
 
     hufflepuff = LogisticRegression("Hufflepuff", alpha=0.1, max_iter=1000, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Hufflepuff', 1, 0)
     hufflepuff.fit(x_train, y_train)
-    #print(hufflepuff.thetas)
     setTheta(gryffindor.thetas, ravenclaw.thetas, slytherin.thetas, hufflepuff.thetas)
 
 if __name__ == "__main__":
