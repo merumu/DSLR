@@ -25,12 +25,16 @@ def normalize(df):
     return df_norm
 
 def training(data):
-    data.dropna(subset=['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying'], inplace=True)
+    try:
+        data.dropna(subset=['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying'], inplace=True)
+        y = np.array(data['Hogwarts House'])
+    except:
+        print("Error: Wrong column name in data")
+        exit()
     x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying']]
     #x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
     x_train = x_norm.to_numpy()
-    y = np.array(data['Hogwarts House'])
     gryffindor = LogisticRegression("Gryffindor", alpha=0.1, max_iter=1000, verbose=True, learning_rate='constant')
     y_train = np.where(y == 'Gryffindor', 1, 0)
     gryffindor.fit(x_train, y_train)
