@@ -21,7 +21,7 @@ def normalize(df):
     return df_norm
 
 def training(data):
-    data = data.dropna()#for later : should drop only NaN line in selected columns
+    data.dropna(subset=['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying'], inplace=True)
     x_data = data[['Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Charms','Flying']]
     #x_data = data[['Arithmancy','Astronomy','Herbology','Defense Against the Dark Arts','Divination','Muggle Studies','Ancient Runes','History of Magic','Transfiguration','Potions','Care of Magical Creatures','Charms','Flying']]
     x_norm = normalize(x_data)
