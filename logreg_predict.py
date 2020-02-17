@@ -25,9 +25,7 @@ def delete_nan(size, stud):
     total = 0
     nb = 0
     for x in stud:
-        if np.isnan(x):
-            pass
-        else:
+        if not np.isnan(x):
             total += x
             nb += 1
     mean = total/nb
