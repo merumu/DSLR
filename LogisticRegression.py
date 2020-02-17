@@ -26,14 +26,15 @@ class LogisticRegression:
         self.thetas = np.zeros(x_train.shape[1] + 1)
         x_new = np.insert(x_train, 0, 1, axis=1)
         y_true = np.array(y_train)
-        print("Training for class : ", self.name)
-        for n in range(self.max_iter + 1):
-            y_pred = self.predict(x_train)
-            grad = self._vec_log_gradient_(x_new, y_true, y_pred)
-            self.thetas = self.thetas - self.alpha * (1/x_train.shape[0]) * grad
-            if (n % (self.max_iter/10)) == 0:
-                print("epoch\t", n, "/",self.max_iter, " :\tloss: ", self._vec_log_loss_(y_true, y_pred, x_train.shape[0]), sep="")
-        print("")
+        if x_train.shape[0] > 0:
+            print("Training for class : ", self.name)
+            for n in range(self.max_iter + 1):
+                y_pred = self.predict(x_train)
+                grad = self._vec_log_gradient_(x_new, y_true, y_pred)
+                self.thetas = self.thetas - self.alpha * (1/x_train.shape[0]) * grad
+                if (n % (self.max_iter/10)) == 0:
+                    print("epoch\t", n, "/",self.max_iter, " :\tloss: ", self._vec_log_loss_(y_true, y_pred, x_train.shape[0]), sep="")
+            print("")
     
     def predict(self, x_train):
         """

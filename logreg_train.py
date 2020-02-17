@@ -16,8 +16,12 @@ def setTheta(thetaG, thetaR, thetaS, thetaH):
 
 def normalize(df):
     df_norm = pd.DataFrame()
-    for col in df:
-        df_norm[col] = (df[col] - df[col].min()) / (df[col].max() - df[col].min())
+    try:
+        for col in df:
+            df_norm[col] = (df[col] - df[col].min()) / (df[col].max() - df[col].min())
+    except:
+        print("Error: value in data feature is not a float")
+        exit()
     return df_norm
 
 def training(data):
