@@ -51,22 +51,6 @@ class LogisticRegression:
             X = np.insert(x_train, 0, 1, axis=1)
             return X.dot(self.thetas)
         return None
-    
-    def score(self, x_train, y_train):
-        """
-        Returns the mean accuracy on the given test data and labels.
-        Arg:
-            x_train: a 1d or 2d numpy ndarray for the samples
-            y_train: a scalar or a numpy ndarray for the correct labels
-        Returns:
-            Mean accuracy of self.predict(x_train) with respect to y_true
-            None on any error.
-        Raises:
-            This method should not raise any Exception.
-        """
-        y_pred = self.predict(x_train)
-        y_true = np.array(y_train)
-        return (y_pred == y_true).mean()
 
     def _sigmoid(self, x):
         if isinstance(x, list):
