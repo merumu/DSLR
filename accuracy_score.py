@@ -20,7 +20,9 @@ def accuracy_score_(y_true, y_pred, normalize=True):
             n += 1
     if normalize == False:
         return n
-    return n / y_pred.shape[0]
+    if y_pred.shape[0] > 0:
+        return n / y_pred.shape[0]
+    return None
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
