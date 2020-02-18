@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 from describe import *
 
 def getHouse(data, house):
-    house = data[data["Hogwarts House"]==house]
+    try:
+        house = data[data["Hogwarts House"]==house]
+    except:
+        print("Error: can't find column named 'Hogwarts House'")
+        exit()
     return house
 
 def compare(tmp1, tmp2):
@@ -47,16 +51,16 @@ def scatterPlot(data):
                                 best = score
                                 feat1 = row1
                                 feat2 = row2
-    df = data[['Hogwarts House',feat1,feat2]].dropna()
-    #df1 = df[feat1]
-    #df2 = df[feat2]
+    try:
+        df = data[['Hogwarts House',feat1,feat2]].dropna()
+    except:
+        print("Error: can't find column named 'Hogwarts House'")
+        exit()
     Gryffindor = getHouse(data, 'Gryffindor')
     Slytherin = getHouse(data, 'Slytherin')
     Ravenclaw = getHouse(data, 'Ravenclaw')
     Hufflepuff = getHouse(data, 'Hufflepuff')
     plt.title(str(feat1) + " / " +str(feat2))
-    #plt.scatter(df1.index, df1, alpha=0.5, label=str(feat1))
-    #plt.scatter(df2.index, df2, alpha=0.5, label=str(feat2))
     plt.scatter(Gryffindor[feat1], Gryffindor[feat2], alpha=0.5, label='Gryffindor', color='r')
     plt.scatter(Slytherin[feat1], Slytherin[feat2], alpha=0.5, label='Slytherin', color='g')
     plt.scatter(Ravenclaw[feat1], Ravenclaw[feat2], alpha=0.5, label='Ravenclaw', color='b')
@@ -73,4 +77,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         scatterPlot(data)
     else:
-        print("Usage : python scatter_plot.py path_file")
+        print("Usage : python scatter_plot.py path.csv")
