@@ -7,9 +7,13 @@ import pandas as pd
 import seaborn as sns
 
 def pairPlot(data):
-    sns.set(style="ticks")
-    df = data.drop(columns=['Index','First Name','Last Name','Birthday','Best Hand'])
+    try:
+        df = data.drop(columns=['Index','First Name','Last Name','Birthday','Best Hand'])
+    except:
+        print("Error: wrong column name in data")
+        exit()
     #pd.plotting.scatter_matrix(df, alpha = 0.2, figsize = (13, 13), diagonal = 'hist')
+    sns.set(style="ticks")
     g = sns.PairGrid(df, hue="Hogwarts House", height=1)
     g.map_diag(plt.hist, alpha=0.8)
     g.map_offdiag(plt.scatter, s=1)
@@ -22,4 +26,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         pairPlot(data)
     else:
-        print("Usage : python pair_plot.py path_file")
+        print("Usage : python pair_plot.py path.csv")
