@@ -7,7 +7,9 @@ def mean(data):
     total = 0
     for value in data:
         total += value
-    return total / len(data)
+    if len(data) > 0:
+        return total / len(data)
+    return None
 
 def std(data):
     n = 0
@@ -16,21 +18,27 @@ def std(data):
     for value in data:
         summ += (value - moy) ** 2
         n += 1
-    return numpy.sqrt(summ / (n - 1))
+    if n > 1:
+        return numpy.sqrt(summ / (n - 1))
+    return None
 
 def mini(data):
-    tmp = data[0]
-    for value in data:
-        if tmp > value:
-            tmp = value
-    return tmp
+    if len(data) > 0:
+        tmp = data[data.index[0]]
+        for value in data:
+            if tmp > value:
+                tmp = value
+        return tmp
+    return None
 
 def maxi(data):
-    tmp = data[0]
-    for value in data:
-        if tmp < value:
-            tmp = value
-    return tmp
+    if len(data) > 0:
+        tmp = data[data.index[0]]
+        for value in data:
+            if tmp < value:
+                tmp = value
+        return tmp
+    return None
 
 def firstQuartile(data):
     tmp = data.sort_values()
@@ -41,6 +49,7 @@ def firstQuartile(data):
         if index == q1:
             return value
         index += 1
+    return None
 
 def median(data):
     tmp = data.sort_values()
@@ -51,6 +60,7 @@ def median(data):
         if index == q2:
             return value
         index += 1
+    return None
 
 def thirdQuartile(data):
     tmp = data.sort_values()
@@ -61,6 +71,7 @@ def thirdQuartile(data):
         if index == q3:
             return value
         index += 1
+    return None
 
 def describe(data):
     feature = pandas.DataFrame(index=['Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max'])
@@ -80,4 +91,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         describe(data)
     else:
-        print("Usage : python describe.py path_file")
+        print("Usage : python describe.py path.csv")
