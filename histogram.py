@@ -5,7 +5,11 @@ import matplotlib.pyplot as plt
 from describe import std
 
 def getHouse(data, row, house):
-    house = data[data["Hogwarts House"]==house]
+    try:
+        house = data[data["Hogwarts House"]==house]
+    except:
+        print("Error: can't find column named 'Hogwarts House'")
+        exit()
     return house[row].dropna()
 
 def histogram(data):
@@ -46,4 +50,4 @@ if __name__ == "__main__":
         data = loader.load(str(sys.argv[1]))
         histogram(data)
     else:
-        print("Usage : python histogram.py path_file")
+        print("Usage : python histogram.py path.csv")

@@ -80,8 +80,11 @@ def describe(data):
         if all(isinstance(x, float) for x in data[row]):
             tmp = data[row].dropna()
             if len(tmp) > 0:
-                feature['Feature ' + str(n)] = [len(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
-                #feature['pandas ' + str(n)] = [tmp.count(), tmp.mean(), tmp.std(), min(tmp), tmp.quantile(.25), tmp.quantile(.5), tmp.quantile(.75), max(tmp)]
+                try:
+                    feature['Feature ' + str(n)] = [len(tmp), mean(tmp), std(tmp), mini(tmp), firstQuartile(tmp), median(tmp), thirdQuartile(tmp), maxi(tmp)]
+                    #feature['pandas ' + str(n)] = [tmp.count(), tmp.mean(), tmp.std(), min(tmp), tmp.quantile(.25), tmp.quantile(.5), tmp.quantile(.75), max(tmp)]
+                except:
+                    print("Error: Overflow from a too large value in data in feature " + str(n))
                 n += 1
     print(feature)
 
