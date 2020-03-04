@@ -14,6 +14,7 @@ def pairPlot(data):
         exit()
     #pd.plotting.scatter_matrix(df, alpha = 0.2, figsize = (13, 13), diagonal = 'hist')
     sns.set(style="ticks")
+    sns.set_context("notebook", font_scale=1.2)
     g = sns.PairGrid(df, hue="Hogwarts House", height=1)
     g.map_diag(plt.hist, alpha=0.8)
     g.map_offdiag(plt.scatter, s=1)
