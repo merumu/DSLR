@@ -1,10 +1,10 @@
+#!/Users/maleroy/miniconda3/bin/python
 import sys
 import numpy as np
 sys.path.append('../utils')
 from FileLoader import FileLoader
 import matplotlib.pyplot as plt
 import pandas as pd
-#from pandas.plotting import scatter_matrix
 import seaborn as sns
 
 def pairPlot(data):
@@ -13,7 +13,6 @@ def pairPlot(data):
     except:
         print("Error: wrong column name in data")
         exit()
-    #pd.plotting.scatter_matrix(df, alpha = 0.2, figsize = (13, 13), diagonal = 'hist')
     sns.set(style="ticks")
     sns.set_context("notebook", font_scale=1.2)
     g = sns.PairGrid(df, hue="Hogwarts House", height=1)

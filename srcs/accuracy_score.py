@@ -1,3 +1,4 @@
+#!/Users/maleroy/miniconda3/bin/python
 import numpy as np
 import sys
 sys.path.append('../utils')
